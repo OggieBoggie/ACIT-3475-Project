@@ -36,12 +36,12 @@ npm start
 ### env file
 Create a new file in the express directory called `.env` and add the following lines:
 ```ini
-DATABASE_URL=your_database_url_here
+DATABASE_URL=""
 
-AWS_BUCKET_NAME=your_bucket_name_here
-AWS_BUCKET_REGION=your_bucket_region_here
-AWS_ACCESS_KEY=your_access_key_here
-AWS_SECRET_ACCESS_KEY=your_secret_access_key_here
+AWS_BUCKET_NAME=""
+AWS_BUCKET_REGION=""
+AWS_ACCESS_KEY=""
+AWS_SECRET_ACCESS_KEY=""
 ```
 Replace the placeholders with your actual configuration values.
 
