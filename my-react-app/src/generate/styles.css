@@ -25,3 +25,45 @@
 .text-custom-contrast {
     color: #5A189A;
 }
+
+.search {
+    width: 1000px;
+    height: 95px;
+    border-radius: 50px;
+    background: #DCBFFF;
+}
+
+.search-input {
+    width: 600px;
+    height: 50px;
+    color: white;
+}
+
+.generate {
+    width: 300px;
+    height: 85px;
+    border-radius: 50px;
+    background: #D0A2F7;
+    color: white;
+}
+
+.loading-bar {
+    width: 0px;
+    height: 8px;
+    background-color: #D0A2F7;
+}
+
+.loading-text {
+    font-size: 18px;
+    color: #5A189A;
+}
+
+.loading-bar-full {
+    width: 512px;
+    height: 8px;
+    background-color: #D0A2F7;
+}
+
+.loading-none {
+    display: none;
+}
