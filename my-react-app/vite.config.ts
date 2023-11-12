@@ -15,7 +15,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(root, 'index.html'),
-        testing: resolve(root, 'testing', 'index.html')
+        testing: resolve(root, 'testing', 'index.html'),
+        generate: resolve(root, 'generate', 'index.html'),
+        view: resolve(root, 'view', 'index.html'),
+        upload: resolve(root, 'upload', 'index.html'),
       },
     },
   },

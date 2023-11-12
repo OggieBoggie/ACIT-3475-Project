@@ -1,0 +1,21 @@
+.bg-custom-lightest {
+    background-color: #F1EAFF;
+  }
+  .bg-custom-lighter {
+    background-color: #E5D4FF;
+  }
+  .bg-custom-light {
+    background-color: #DCBFFF;
+  }
+  .bg-custom {
+    background-color: #D0A2F7;
+  }
+  .text-custom-dark {
+    color: #D0A2F7;
+  }
+  .border-custom-light {
+    border-color: #E5D4FF;
+  }
+  .text-custom-contrast {
+    color: #5A189A; 
+  }
