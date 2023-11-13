@@ -25,3 +25,8 @@
 .text-custom-contrast {
     color: #5A189A;
 }
+
+.images {
+    max-width: full;
+    max-height: 400px;
+}

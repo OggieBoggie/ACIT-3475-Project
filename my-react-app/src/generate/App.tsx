@@ -1,5 +1,6 @@
 import './styles.css';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
+import SaveButton from '../components/Save';
 import { useState, useRef } from 'react';
 import { OpenAI } from 'openai'
 
@@ -42,11 +43,14 @@ export default function App() {
 
     return (
         <main className='flex flex-col m-auto items-center bg-custom-lightest min-h-screen'>
-            <Sidebar />
+            <Navbar />
             <h1 className='text-4xl font-bold text-center text-custom-contrast m-6 pb-30'> Generate Image </h1>
             <div className='flex flex-col'>
                 {imageUrl !== "/" &&
-                    <img src={imageUrl} alt="Generated Image" className='w-1/2 m-auto' />
+                    <div className='flex flex-col justify-center'>
+                        <img src={imageUrl} alt="Generated Image" className='w-1/2 m-auto' />
+                        <SaveButton />
+                    </div>
                 }
                 <div className={loading ? 'loading-text' : 'loading-none'}>Loading ...</div>
             </div>

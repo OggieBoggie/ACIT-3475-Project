@@ -1,10 +1,10 @@
-import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
 import './styles.css';
 
 export default function App() {
   return (
     <main className='bg-custom-lightest min-h-screen'>
-      <Sidebar />
+      <Navbar />
       <section className='text-center p-10'>
         <h2 className='text-4xl font-bold text-custom-contrast mb-6'> Welcome to Dream Albums</h2>
         <p className='text-lg text-custom-contrast mb-4'>
