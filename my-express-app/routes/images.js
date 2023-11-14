@@ -35,9 +35,12 @@ router.post('/', async (req, res) => {
 });
 
 // Delete one image
-router.delete('/:id', getImage, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-        await res.image.remove();
+        const result = await Image.findByIdAndDelete(req.params.id);
+        if (result == null) {
+            return res.status(404).json({ message: 'Cannot find image' });
+        }
         res.json({ message: 'Deleted image' });
     } catch (err) {
         res.status(500).json({ message: err.message });
