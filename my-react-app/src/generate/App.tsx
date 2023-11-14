@@ -1,6 +1,6 @@
 import './styles.css';
 import Navbar from '../components/Navbar';
-import SaveButton from '../components/Save';
+import Saveform from '../components/Saveform';
 import { useState, useRef } from 'react';
 import { OpenAI } from 'openai'
 
@@ -12,6 +12,9 @@ export default function App() {
 
     const [imageUrl, setImageUrl] = useState("/");
     const [loading, setLoading] = useState(false);
+    const [showForm, setShowForm] = useState(false);
+    const [imageTitle, setImageTitle] = useState("");
+
     let inputRef = useRef(null);
 
     async function imageGenerator() {
@@ -33,12 +36,18 @@ export default function App() {
                 console.log(response.data)
                 // @ts-ignore
                 setImageUrl(response.data[0].url);
+                // @ts-ignore
+                setImageTitle(inputRef.current.value);
             }
         } catch (error) {
             console.error("Failed to generate the image:", error);
         } finally {
             setLoading(false);
         }
+    }
+
+    const toggleForm = () => {
+        setShowForm(prevState => !prevState);
     }
 
     return (
@@ -49,7 +58,9 @@ export default function App() {
                 {imageUrl !== "/" &&
                     <div className='flex flex-col justify-center'>
                         <img src={imageUrl} alt="Generated Image" className='w-1/2 m-auto' />
-                        <SaveButton />
+                        <button className="bg-custom text-white px-5 py-2.5 border-none rounded cursor-pointer text-base font-bold uppercase my-2.5 transition-colors duration-500 ease-in-out hover:bg-purple-800" onClick={toggleForm}>
+                            Save Image
+                        </button>
                     </div>
                 }
                 <div className={loading ? 'loading-text' : 'loading-none'}>Loading ...</div>
@@ -64,6 +75,10 @@ export default function App() {
                     Generate
                 </div>
             </div>
+            {showForm && 
+            <Saveform 
+            url={imageUrl} title={imageTitle} closeForm={toggleForm}
+            />}
         </main>
     )
 }
