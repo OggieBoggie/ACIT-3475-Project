@@ -20,6 +20,8 @@ app.use(helmet())
 app.use(express.json())
 
 // Routes here
+const imageRoute = require('./routes/images')
+app.use('/images', imageRoute)
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

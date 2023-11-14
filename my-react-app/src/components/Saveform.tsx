@@ -9,6 +9,8 @@ export default function Saveform (props: any) {
         description: '',
     })
 
+    const [error, setError] = useState('')
+
     const handleChange = (event: any) => {
         const {name, value } = event.target
         setImageInfo({
@@ -18,9 +20,14 @@ export default function Saveform (props: any) {
     }
     const handleSubmit = (event: any) => {
         event.preventDefault()
+        if (!imageInfo.title || !imageInfo.author) {
+            setError('Please enter values for the title and author fields')
+            return
+        }
+        const dateString = new Date().toISOString().slice(0, 10)
         const submittedInfo = {
             ...imageInfo,
-            date: new Date().toISOString()
+            date: dateString
         }
         console.log(submittedInfo)
         closeForm()
@@ -62,6 +69,7 @@ export default function Saveform (props: any) {
                             className="w-full h-24 px-3 py-2 border rounded text-gray-700 focus:outline-none focus:border-purple-500"
                         ></textarea>
                     </div>
+                    {error && <p className="text-red-500 text-xs italic mb-2">{error}</p>}
                     <div className="flex items-center justify-between">
                         <button 
                             type="submit" 

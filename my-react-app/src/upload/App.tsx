@@ -35,7 +35,7 @@ function App() {
             <Navbar />
             <h1 className='text-4xl font-bold text-center text-custom-contrast m-6 pb-30'> Upload Image </h1>
             <div className='p-4'>
-                <input type="file" accept="image/jpeg, image/png" onChange={handleImageChange} />
+                <input type="file" accept="image/*" onChange={handleImageChange} />
                 {error && <p className="text-red-500">{error}</p>}
             </div>
             {image && (

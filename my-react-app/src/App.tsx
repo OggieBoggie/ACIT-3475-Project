@@ -20,7 +20,7 @@ export default function App() {
           <a href="http://localhost:5173/upload/" className="bg-custom text-white font-bold py-2 px-4 rounded">
             Upload Images
           </a>
-          <a href="http://localhost:5173/gallery/" className="bg-custom text-white font-bold py-2 px-4 rounded">
+          <a href="http://localhost:5173/view/" className="bg-custom text-white font-bold py-2 px-4 rounded">
             View Gallery
           </a>
         </div>
