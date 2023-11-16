@@ -15,7 +15,7 @@ function App() {
     setSearchContents(event.target.value);
   };
   const filteredImages = images.filter((image) =>
-    image.title.toLowerCase().includes(searchContents.toLowerCase())
+    image.title.toLowerCase().startsWith(searchContents.toLowerCase())
   );
   useEffect(() => {
     const fetchImages = async () => {
