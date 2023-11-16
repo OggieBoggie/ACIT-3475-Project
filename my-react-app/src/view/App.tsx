@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../components/Navbar";
-// import Search from "./Search";
 
 type Image = {
   _id: string;
@@ -36,7 +35,6 @@ function App() {
   return (
     <main className="min-h-screen bg-custom-lightest items-center justify-center">
       <Sidebar />
-      {/* <Search images={images} /> */}
       <input
         type="text"
         id="search-bar"
