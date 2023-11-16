@@ -30,25 +30,42 @@ router.get('/:id', getImage, (req, res) => {
     res.json(res.image);
 });
 
+const handleFileAndBody = (req, res, next) => {
+    if (!req.file && !req.body.url) {
+        return res.status(400).json({ message: 'No file uploaded and no URL provided' });
+    }
+    next();
+};
+
 // Create one image
-router.post('/', upload.single('file'), async (req, res) => {
-    const file = req.file;
+router.post('/', upload.single('file'), handleFileAndBody, async (req, res) => {
+    let imageUrl;
     
-    if (!file) {
-        return res.status(400).json({ message: 'No file uploaded' });
+    if (req.file) {
+        const file = req.file;
+        const uploadParams = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Body: fs.createReadStream(file.path),
+            Key: `${Date.now()}_${file.originalname}`
+        };
+
+        try {
+            const result = await s3.upload(uploadParams).promise();
+            imageUrl = result.Location; 
+        } catch (err) {
+            return res.status(500).json({ message: 'Error uploading image' });
+        } finally {
+            fs.unlink(file.path, (err) => {
+                if (err) console.error(`Failed to delete local file: ${err}`);
+            });
+        }
+    } else {
+        imageUrl = req.body.url;
     }
 
-    const uploadParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Body: fs.createReadStream(file.path),
-        Key: `${Date.now()}_${file.originalname}`
-    };
-
     try {
-        const result = await s3.upload(uploadParams).promise();
-
         const image = new Image({
-            url: result.Location,
+            url: imageUrl,
             title: req.body.title,
             author: req.body.author,
             description: req.body.description || '',
@@ -57,11 +74,7 @@ router.post('/', upload.single('file'), async (req, res) => {
         const newImage = await image.save();
         res.status(201).json(newImage);
     } catch (err) {
-        res.status(500).json({ message: 'Error uploading image' });
-    } finally {
-        fs.unlink(file.path, (err) => {
-            if (err) console.error(`Failed to delete local file: ${err}`);
-        });
+        res.status(500).json({ message: 'Error saving image information' });
     }
 });
 
