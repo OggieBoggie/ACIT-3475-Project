@@ -2,9 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function Saveform (props: any) {
-    const { url, title, closeForm } = props
+    const { url, file, title, closeForm } = props
     const [imageInfo, setImageInfo] = useState({
-        url: url,
         title: title,
         author: '',
         description: '',
@@ -20,27 +19,48 @@ export default function Saveform (props: any) {
         })
     }
     const handleSubmit = async (event: any) => {
-        event.preventDefault()
+        event.preventDefault();
         if (!imageInfo.title || !imageInfo.author) {
-            setError('Please enter values for the title and author fields')
-            return
+            setError('Please enter values for the title and author fields');
+            return;
         }
-        const dateString = new Date().toISOString().slice(0, 10)
-        const submittedInfo = {
-            ...imageInfo,
-            date: dateString
+
+        const formData = new FormData();
+        if (file) {
+            // If a file is provided, append it to FormData
+            formData.append('file', file);
+        } else {
+            // If no file is provided, but a URL is, append the URL
+            formData.append('url', url);
         }
+        formData.append('title', imageInfo.title);
+        formData.append('author', imageInfo.author);
+        formData.append('description', imageInfo.description);
+
         try {
-            await axios.post('http://localhost:8000/images', submittedInfo)
+            const response = await axios({
+                method: 'post',
+                url: 'http://localhost:8000/images',
+                data: file ? formData : { ...imageInfo, url: url }, 
+                headers: file ? { 'Content-Type': 'multipart/form-data' } : { 'Content-Type': 'application/json' },
+            });
+
             closeForm();
         } catch (error) {
-            setError('Error saving image info')
+            setError('Error saving image info');
         }
-    }
+    };
 
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
-            <div className="container mx-auto max-w-md shadow-md hover:shadow-lg transition duration-300">
+            <div className="relative container mx-auto max-w-md shadow-md hover:shadow-lg transition duration-300">
+                <button
+                    type="button"
+                    className="absolute top-0 right-0 mr-2 text-2xl font-semibold text-gray-700 hover:text-gray-900"
+                    onClick={closeForm}
+                >
+                    &times;
+                </button>
                 <form className="p-4 bg-white rounded-lg" onSubmit={handleSubmit}>
                     <div className="mb-2">
                         <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">Title</label>

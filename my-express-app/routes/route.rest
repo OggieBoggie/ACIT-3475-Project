@@ -2,4 +2,6 @@ GET http://localhost:8000/images
 
 ### 
 
-DELETE http://localhost:8000/images/6553f7343f2f3cb959583c2b
+DELETE http://localhost:8000/images/65556b0fe595592faabac37a
+
+
