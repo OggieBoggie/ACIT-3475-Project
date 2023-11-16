@@ -2,9 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function Saveform (props: any) {
-    const { url, title, closeForm } = props
+    const { file, title, closeForm } = props
     const [imageInfo, setImageInfo] = useState({
-        url: url,
         title: title,
         author: '',
         description: '',
@@ -21,17 +20,23 @@ export default function Saveform (props: any) {
     }
     const handleSubmit = async (event: any) => {
         event.preventDefault()
-        if (!imageInfo.title || !imageInfo.author) {
+        if (!imageInfo.title || !imageInfo.author || !file) {
             setError('Please enter values for the title and author fields')
             return
         }
-        const dateString = new Date().toISOString().slice(0, 10)
-        const submittedInfo = {
-            ...imageInfo,
-            date: dateString
-        }
+
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('title', imageInfo.title)
+        formData.append('author', imageInfo.author)
+        formData.append('description', imageInfo.description)
+
         try {
-            await axios.post('http://localhost:8000/images', submittedInfo)
+            await axios.post('http://localhost:8000/images', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             closeForm();
         } catch (error) {
             setError('Error saving image info')

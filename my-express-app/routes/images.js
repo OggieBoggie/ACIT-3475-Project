@@ -1,6 +1,19 @@
+require('dotenv').config();
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const Image = require('../models/image');
+const multer = require('multer');
+const AWS = require('aws-sdk');
+const upload = multer({ dest: 'uploads/' });
+
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    region: process.env.AWS_REGION
+});
+
+const s3 = new AWS.S3();
 
 // Get all images
 router.get('/', async (req, res) => {
@@ -18,19 +31,37 @@ router.get('/:id', getImage, (req, res) => {
 });
 
 // Create one image
-router.post('/', async (req, res) => {
-    const image = new Image({
-        url: req.body.url,
-        title: req.body.title,
-        author: req.body.author,
-        description: req.body.description || '',
-        date: req.body.date,
-    })
+router.post('/', upload.single('file'), async (req, res) => {
+    const file = req.file;
+    
+    if (!file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const uploadParams = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Body: fs.createReadStream(file.path),
+        Key: `${Date.now()}_${file.originalname}`
+    };
+
     try {
+        const result = await s3.upload(uploadParams).promise();
+
+        const image = new Image({
+            url: result.Location,
+            title: req.body.title,
+            author: req.body.author,
+            description: req.body.description || '',
+        });
+
         const newImage = await image.save();
         res.status(201).json(newImage);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(500).json({ message: 'Error uploading image' });
+    } finally {
+        fs.unlink(file.path, (err) => {
+            if (err) console.error(`Failed to delete local file: ${err}`);
+        });
     }
 });
 
