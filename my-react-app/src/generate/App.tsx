@@ -38,6 +38,10 @@ export default function App() {
                 setImageUrl(response.data[0].url);
                 // @ts-ignore
                 setImageTitle(inputRef.current.value);
+                if (response.data[0].revised_prompt) {
+                    // @ts-ignore
+                    inputRef.current.value = response.data[0].revised_prompt;
+                }
             }
         } catch (error) {
             console.error("Failed to generate the image:", error);
