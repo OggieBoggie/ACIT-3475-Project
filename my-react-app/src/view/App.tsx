@@ -6,6 +6,9 @@ type Image = {
   _id: string;
   url: string;
   title: string;
+  author: string;
+  description: string;
+  date: string;
 };
 
 function App() {
@@ -24,6 +27,7 @@ function App() {
           "http://localhost:8000/images"
         );
         setImages(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching images:", error);
       }
@@ -42,15 +46,18 @@ function App() {
         placeholder="Title Name"
         onChange={handleSearchChange}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 m-4">
         {filteredImages.map((image) => (
           <div
             key={image._id}
-            className="max-w-sm rounded overflow-hidden shadow-lg"
+            className="inline-flex flex-col max-w-sm rounded overflow-hidden shadow-lg border border-gray-300"
           >
-            <img src={image.url} alt={image.title} className="w-full" />
+            <img src={image.url} alt={image.title} className="w-full h-auto object-cover" />
             <div className="px-6 py-4">
-              <div className="font-bold text-xl mb-2">{image.title}</div>
+              <div className="font-bold text-xl mb-1">{image.title}</div>
+              <p className="text-gray-700 text-base">Created By: {image.author}</p>
+              <p className="text-gray-700 text-base">{image.description}</p>
+              <p className="text-gray-700 text-base">Date Created: {image.date.slice(0, 10)}</p>
             </div>
           </div>
         ))}
