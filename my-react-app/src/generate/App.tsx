@@ -33,7 +33,6 @@ export default function App() {
                 n: 1,
             });
             if (response.data && response.data.length > 0) {
-                console.log(response.data)
                 // @ts-ignore
                 setImageUrl(response.data[0].url);
                 // @ts-ignore
