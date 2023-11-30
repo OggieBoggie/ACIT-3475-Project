@@ -2,6 +2,8 @@ import Navbar from './components/Navbar';
 import './styles.css';
 
 export default function App() {
+  const webUrl = import.meta.env.VITE_WEB_URL;
+  
   return (
     <main className='bg-custom-lightest min-h-screen'>
       <Navbar />
@@ -14,13 +16,13 @@ export default function App() {
           Generate photos from various APIs, save your favorite images, or upload and view from your collection.
         </p>
         <div className="space-x-4">
-          <a href="http://localhost:5173/generate/" className="bg-custom text-white font-bold py-2 px-4 rounded">
+          <a href={`${webUrl}/generate/`} className="bg-custom text-white font-bold py-2 px-4 rounded">
             Generate Images
           </a>
-          <a href="http://localhost:5173/upload/" className="bg-custom text-white font-bold py-2 px-4 rounded">
+          <a href={`${webUrl}/upload/`} className="bg-custom text-white font-bold py-2 px-4 rounded">
             Upload Images
           </a>
-          <a href="http://localhost:5173/view/" className="bg-custom text-white font-bold py-2 px-4 rounded">
+          <a href={`${webUrl}/view/`} className="bg-custom text-white font-bold py-2 px-4 rounded">
             View Gallery
           </a>
         </div>

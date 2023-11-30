@@ -26,7 +26,7 @@ function App() {
     const fetchImages = async () => {
       try {
         const response = await axios.get<Image[]>(
-          apiUrl
+          `${apiUrl}/images`
         );
         setImages(response.data);
       } catch (error) {
