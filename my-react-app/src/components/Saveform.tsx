@@ -42,7 +42,7 @@ export default function Saveform (props: any) {
         try {
             const response = await axios({
                 method: 'post',
-                url: apiUrl,
+                url: `${apiUrl}/images`,
                 data: file ? formData : { ...imageInfo, url: url }, 
                 headers: file ? { 'Content-Type': 'multipart/form-data' } : { 'Content-Type': 'application/json' },
             });
