@@ -21,7 +21,8 @@ Step 5: Get a key from https://platform.openai.com/api-keys
 Step 6: Create an .env file
 ```ini
 VITE_API=openaiKey
-VITE_API_URL=(e.g. http://localhost:8000)
+VITE_API_URL=http://localhost:8000
+VITE_WEB_URL=http://localhost:5173
 ```
 
 ## Back End
