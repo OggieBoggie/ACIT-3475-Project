@@ -30,7 +30,7 @@ function App() {
         );
         setImages(response.data);
       } catch (error) {
-        console.error("Error fetching images:", error);
+        console.error("Error fetching image:", error);
       }
     };
 
