@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Saveform (props: any) {
     const { url, file, title, closeForm } = props
     const [imageInfo, setImageInfo] = useState({
@@ -40,7 +42,7 @@ export default function Saveform (props: any) {
         try {
             const response = await axios({
                 method: 'post',
-                url: 'http://localhost:8000/images',
+                url: `${apiUrl}/images`,
                 data: file ? formData : { ...imageInfo, url: url }, 
                 headers: file ? { 'Content-Type': 'multipart/form-data' } : { 'Content-Type': 'application/json' },
             });

@@ -11,6 +11,8 @@ type Image = {
   date: string;
 };
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function App() {
   const [images, setImages] = useState<Image[]>([]);
   const [searchContents, setSearchContents] = useState("");
@@ -27,12 +29,11 @@ function App() {
     const fetchImages = async () => {
       try {
         const response = await axios.get<Image[]>(
-          "http://localhost:8000/images"
+          `${apiUrl}/images`
         );
         setImages(response.data);
-        console.log(response.data);
       } catch (error) {
-        console.error("Error fetching images:", error);
+        console.error("Error fetching image:", error);
       }
     };
 
