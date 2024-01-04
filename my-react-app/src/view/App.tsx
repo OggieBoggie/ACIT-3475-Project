@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import Sidebar from "../components/Navbar";
 
@@ -14,12 +14,15 @@ type Image = {
 function App() {
   const [images, setImages] = useState<Image[]>([]);
   const [searchContents, setSearchContents] = useState("");
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchContents(event.target.value);
-  };
-  const filteredImages = images.filter((image) =>
-    image.title.toLowerCase().startsWith(searchContents.toLowerCase())
-  );
+
+  
+  const filteredImages = useMemo(() => 
+  images.filter(image => 
+    image.title.toLowerCase().includes(searchContents.toLowerCase())
+  ), [searchContents, images]);
+
+
+
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -42,9 +45,10 @@ function App() {
       <input
         type="text"
         id="search-bar"
+        value={searchContents}
         className="p-1 border border-gray-300 focus:outline-none ml-4 mt-4"
         placeholder="Title Name"
-        onChange={handleSearchChange}
+        onChange={e => setSearchContents(e.target.value) }
       />
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 m-4">
         {filteredImages.map((image) => (

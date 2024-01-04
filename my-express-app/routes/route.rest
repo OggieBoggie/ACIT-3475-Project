@@ -1,7 +1,6 @@
-GET http://localhost:8000/images
+GET http://54.204.255.187:4563/images
 
 ### 
 
-DELETE http://localhost:8000/images/65556b0fe595592faabac37a
-
+DELETE http://54.204.255.187:4563/images/6571fcb717eddbe57d879740
 
