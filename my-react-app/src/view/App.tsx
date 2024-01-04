@@ -16,14 +16,11 @@ const apiUrl = import.meta.env.VITE_API_URL;
 function App() {
   const [images, setImages] = useState<Image[]>([]);
   const [searchContents, setSearchContents] = useState("");
-
   
   const filteredImages = useMemo(() => 
   images.filter(image => 
     image.title.toLowerCase().includes(searchContents.toLowerCase())
   ), [searchContents, images]);
-
-
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -49,7 +46,7 @@ function App() {
         value={searchContents}
         className="p-1 border border-gray-300 focus:outline-none ml-4 mt-4"
         placeholder="Title Name"
-        onChange={e => setSearchContents(e.target.value) }
+        onChange={e => setSearchContents(e.target.value)}
       />
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 m-4">
         {filteredImages.map((image) => (
